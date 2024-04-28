@@ -14,3 +14,23 @@ require('mason-lspconfig').setup({
     end,
   }
 })
+
+local cmp = require("cmp")
+cmp.setup({
+    mapping = cmp.mapping.preset.insert({
+        ['<C-Space>'] = cmp.mapping.complete(),
+        ['<CR>'] = cmp.mapping.confirm({select = true}),
+        ['<Tab>'] = cmp.mapping(function(fallback)
+            if cmp.visible() then
+                vim.pretty_print(cmp.get_entries)
+                if #cmp.get_entries() == 1 then
+                    cmp.mapping.confirm({select = true })
+                else
+                    cmp.select_next_item()
+                end
+            end
+        end
+        )
+    })
+})
+
